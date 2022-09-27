@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package tarea1;
+import java.util.Date;
 
 /**
  *
@@ -17,4 +18,21 @@ public class Tarea1 {
         // TODO code application logic here
     }
     
+}
+
+class OrdenCompra{
+    private Date fecha;
+    private String estado;
+    public float calcPrecioSinIVA(){
+        
+    }
+    public float calcIVA(){
+        
+    }
+    public float calcPrecio(){
+        
+    }
+    public float calcPeso(){
+        
+    }
 }
