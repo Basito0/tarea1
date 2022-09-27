@@ -36,3 +36,42 @@ class OrdenCompra{
         
     }
 }
+class Cliente{
+    private String nombre;
+    private String rut;
+}
+class Direccion{
+    private String direccion;
+}
+class DocTributario{
+    private String numero;
+    private String rut;
+    private Date fecha
+}
+class Boleto{
+    
+}
+class Factura{
+    
+}
+class DetalleOrden{
+    private int cantidad;
+    public float calcPrecioSinIVA(){
+        
+    }
+    public float calcIVA(){
+        
+    }
+    public float calcPrecio(){
+        
+    }
+    public float calcPeso(){
+        
+    }
+}
+class Articulo{
+    private float peso;
+    private String nombre;
+    private String descripcion;
+    private float precio;
+}
