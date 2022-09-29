@@ -24,9 +24,13 @@ public class Compra {
         Articulo art1 = new Articulo("manzana", "fruta", 7, 100);
         Articulo art2 = new Articulo("naranja", "fruta", 12, 70);
         Articulo art3 = new Articulo("uvas", "fruta", 20, 200);
+        Articulo art4 = new Articulo("ciruelas", "fruta", 20, 150);
+        Articulo art5 = new Articulo("frambuesas", "fruta", 20, 200);
         art1.ToString();
         art2.ToString();
         art3.ToString();
+        art4.ToString();
+        art5.ToString();
         
         //Decidiendo boleta o factura
         Factura doc1 = new Factura();
@@ -48,8 +52,10 @@ public class Compra {
         orden2.addArt(art1, 9);
         orden2.addArt(art3, 6);
         orden3.addArt(art2, 10);
+        orden5.addArt(art4, 6);
         orden4.addArt(art3, 10);
         orden5.addArt(art2, 2);
+        orden5.addArt(art5, 3);
 
         //Direcciones de clientes
         Direccion dir1 = new Direccion("AQUI #123");
@@ -124,13 +130,13 @@ public class Compra {
     
 }
 class OrdenCompra{
-    private float pagar = 0;
+    private float pagar = 0; //El dinero que queda por pagar (se usa para los plazos)
     private Date fecha;
     private String estado;
     private DocTributario doc; //documento asociado a la orden
     private ArrayList<DetalleOrden> detalles;
     
-    public OrdenCompra(DocTributario doct){ // Para iniciar el estado, fecha y tipo
+    public OrdenCompra(DocTributario doct){ // Para iniciar el array, el estado, la fecha y asignar el documento tributario
         detalles = new ArrayList<>();
         estado = "Pendiente";
         fecha = new Date();
@@ -140,27 +146,28 @@ class OrdenCompra{
     public Class getType(){ // Para saber si se tiene boleto o factura
         return doc.getClass();
     }
-    public void addArt(Articulo arti, int cant){ //agrega detalles de compra
+    public void addArt(Articulo arti, int cant){ //agrega DetalleOrden con un tipo de articulo y su cantidad
         DetalleOrden ordet = new DetalleOrden(arti);
         detalles.add(ordet);
         detalles.get(detalles.size()-1).setCant(cant);
         detalles.get(detalles.size()-1).ToString();
-        setTotal(detalles.get(detalles.size()-1).calcPrecio());
+        sumarTotal(detalles.get(detalles.size()-1).calcPrecio());
     }
-    public void setDir(Direccion dir){ //direccion para el docTributario
+    public void setDir(Direccion dir){ //direccion para el docTributario desde Cliente
         doc.setDir(dir);
     }
-    public void setRut(String rut){ //rut para el docTributario
+    public void setRut(String rut){ //rut para el docTributario desde Cliente
         doc.setRut(rut);
     }
-    public float getTotal(){
-        if(pagar < 0){
-            return 0;
-        }
+    public float getTotal(){ //Getter para el dinero que queda por pagar
+
         return pagar;
     }
-    public void setTotal(float monto){
+    public void sumarTotal(float monto){// Sumar/restar al monto que queda por pagar
         pagar += monto;
+    }
+    public void setTotal(float monto){//Setter del monto que queda por pagar
+        pagar = monto;
     }
     public void ToString(){
         System.out.println("Info de la orden");
@@ -205,8 +212,8 @@ class OrdenCompra{
 class Cliente{
     private String nombre;
     private String rut;
-    private Direccion direccion;
-    ArrayList<OrdenCompra> ordenes;
+    private Direccion direccion; //La dirección del cliente
+    ArrayList<OrdenCompra> ordenes; //Almacena las ordenes de cada cliente
     
     public Cliente(String n, String r, Direccion dir){ // valores iniciales para cliente
         ordenes = new ArrayList<>();
@@ -239,10 +246,10 @@ class Cliente{
 class Direccion{
     private String direccion;
     
-    public Direccion(String dir){
+    public Direccion(String dir){ 
         direccion = dir;
     }
-    public String getDir(){
+    public String getDir(){ //Getter de dirección
         return direccion;
     }
     public void ToString(){
@@ -255,20 +262,20 @@ class DocTributario{
     private Date fecha;
     private Direccion direccion; //Para relacionar el documento con una dirección
     
-    public DocTributario(){
+    public DocTributario(){ //Para asignar un número random
         numero = "" + (int)(Math.random()*(1000000-0+1)+0);
     }
     
     public void setDir(Direccion dir){ //Para asignar la direccion de boleta/factura
         direccion = dir;
     }
-    public void setRut(String ru){ //Para asignar la direccion de boleta/factura
+    public void setRut(String ru){ //Para asignar el rut de boleta/factura
         rut = ru;
     }
-    public void setFecha(Date fec){ //Para asignar la direccion de boleta/factura
+    public void setFecha(Date fec){ //Para asignar la fecha de boleta/factura
         fecha = fec;
     }
-    public Direccion getDir(){
+    public Direccion getDir(){ //Getter de la dirección 
         return direccion;
     }
     
@@ -288,12 +295,12 @@ class Factura extends DocTributario{
 }
 class DetalleOrden{
     private int cantidad;
-    private Articulo art; //Para saber el cálculo a realizar
+    private Articulo art; //Artículo para saber el cálculo a realizar
     
     public DetalleOrden(Articulo art1){ //Determina el tipo de articulo
         art = art1;
     }
-    public void setCant(int can){ //Set a cantidad
+    public void setCant(int can){ //Setter de la cantidad del artículo definido
         cantidad = can;
     }
     public void ToString(){
@@ -341,19 +348,19 @@ class Articulo{
     private String descripcion;
     private float precio;
     
-    public Articulo(String Nomb, String Desc, float pes, float prec){
+    public Articulo(String Nomb, String Desc, float pes, float prec){ //Asigna valores a Artículo
         peso = pes;
         precio = prec;
         nombre = Nomb;
         descripcion = Desc;
     }
-    public String getNombre(){
+    public String getNombre(){ //Getter de nombre
         return nombre;
     }
-    public float getPeso(){
+    public float getPeso(){ //Getter de peso
         return peso;
     }
-    public float getPrecio(){
+    public float getPrecio(){ //Getter de precio
         return precio;
     }
     public void ToString(){
@@ -367,24 +374,24 @@ class Articulo{
 class Pago{
     private float monto;
     private Date fecha;
-    private OrdenCompra orden;
+    private OrdenCompra orden; //La orden a pagar
     
-    public void setFecha(Date date){
+    public void setFecha(Date date){ //Setter de fecha
         fecha = date;
     }
-    public void setMonto(int plata){
+    public void setMonto(int plata){ //Setter del monto a pagar
         monto = plata;
     }
-    public void setOrden(OrdenCompra ordem){
+    public void setOrden(OrdenCompra ordem){ //Setter de la orden a pagar
         orden = ordem;
     }
-    public Date getFecha(){
+    public Date getFecha(){ //Getter de la fecha
         return fecha;
     }
-    public float getMonto(){
+    public float getMonto(){ //Getter del monto a pagar
         return monto;
     }
-    public OrdenCompra getCompra(){
+    public OrdenCompra getCompra(){ //Getter de la OrdenCompra
         return orden;
     }
     public void ToString(){
@@ -395,30 +402,35 @@ class Pago{
 }
 class Efectivo extends Pago{
     
-    public Efectivo(OrdenCompra ordem, int plata){
+    public Efectivo(OrdenCompra ordem, int plata){ //Settea monto, orden, fecha y luego paga
         super.setMonto(plata);
         super.setOrden(ordem);
         super.setFecha(new Date());
-        ordem.setTotal(-super.getMonto());
+        ordem.sumarTotal(-super.getMonto());
     }    
-    public float calcDevolucion(){
+    public float calcDevolucion(){ //Calcula la devolución
         if(super.getCompra().getTotal() < 0){
-            return super.getCompra().getTotal()*-1;
+            float a = super.getCompra().getTotal()*-1;
+            super.getCompra().setTotal(0);
+            return a;
         }
-        return super.getMonto() - super.getCompra().getTotal();
+        return 0;
     }
 }
 class Transferencia extends Pago{
     private String banco;
     private String numCuenta;
     
-    public Transferencia(OrdenCompra ordem, String bank, String num, int plata){
+    public Transferencia(OrdenCompra ordem, String bank, String num, int plata){ //Settea info y paga
         banco = bank;
         numCuenta = num;
         super.setMonto(plata);
         super.setOrden(ordem);
         super.setFecha(new Date());
-        ordem.setTotal(-super.getMonto());
+        ordem.sumarTotal(-super.getMonto());
+        if(ordem.getTotal()<0){
+            ordem.setTotal(0);
+        }
     }    
     
     public void ToString(){
@@ -433,13 +445,16 @@ class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
     
-    public Tarjeta(OrdenCompra ordem, String tipe, String numtran, int plata){
+    public Tarjeta(OrdenCompra ordem, String tipe, String numtran, int plata){ //Settea info y paga
         tipo = tipe;
         numTransaccion = numtran;
         super.setMonto(plata);
         super.setOrden(ordem);
         super.setFecha(new Date());
-        ordem.setTotal(-super.getMonto());
+        ordem.sumarTotal(-super.getMonto());
+        if(ordem.getTotal()<0){
+            ordem.setTotal(0);
+        }
     }    
     
     public void ToString(){
