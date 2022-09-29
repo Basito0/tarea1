@@ -272,6 +272,7 @@ class Cliente{
 class Direccion{
     private String direccion;
     
+<<<<<<< HEAD
     public Direccion(String dir){ 
         direccion = dir;
     }
@@ -280,12 +281,17 @@ class Direccion{
     }
     public void ToString(){
         System.out.println("Dirección: " + direccion + "\n");
+=======
+    public void ToString(){
+        System.out.println("Dirección: " + direccion);
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
 class DocTributario{
     private String numero;
     private String rut;
     private Date fecha;
+<<<<<<< HEAD
     private Direccion direccion; //Para relacionar el documento con una dirección
     
     public DocTributario(){ //Para asignar un número random
@@ -304,13 +310,18 @@ class DocTributario{
     public Direccion getDir(){ //Getter de la dirección 
         return direccion;
     }
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     
     public void ToString(){
         System.out.println("Info DocTributario");
         System.out.println("Número: " + numero);
         System.out.println("Rut: " + rut);
         System.out.println("Fecha de compra: " + fecha);
+<<<<<<< HEAD
         System.out.println("Direccion: " + direccion.getDir() + "\n");
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
 class Boleta extends DocTributario{
@@ -321,6 +332,7 @@ class Factura extends DocTributario{
 }
 class DetalleOrden{
     private int cantidad;
+<<<<<<< HEAD
     private Articulo art; //Artículo para saber el cálculo a realizar
     
     public DetalleOrden(Articulo art1){ //Determina el tipo de articulo
@@ -337,6 +349,10 @@ class DetalleOrden{
         System.out.println("IVA: " + calcIVA());
         System.out.println("Precio: " + calcPrecio());
         System.out.println("Peso: " + calcPeso() + "\n");
+=======
+    public void ToString(){
+        System.out.println("Cantidad: " + cantidad);
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
     public float calcPrecioSinIVA(){
         float total = 0;
@@ -374,6 +390,7 @@ class Articulo{
     private String descripcion;
     private float precio;
     
+<<<<<<< HEAD
     public Articulo(String Nomb, String Desc, float pes, float prec){ //Asigna valores a Artículo
         peso = pes;
         precio = prec;
@@ -389,17 +406,24 @@ class Articulo{
     public float getPrecio(){ //Getter de precio
         return precio;
     }
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     public void ToString(){
         System.out.println("Info Artículo");
         System.out.println("Peso: " + peso);
         System.out.println("Nombre: " + nombre);
         System.out.println("Descripción: " + descripcion);
+<<<<<<< HEAD
         System.out.println("Precio: " + precio + "\n");
+=======
+        System.out.println("Precio: " + precio);
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
 class Pago{
     private float monto;
     private Date fecha;
+<<<<<<< HEAD
     private OrdenCompra orden; //La orden a pagar
     
     public void setFecha(Date date){ //Setter de fecha
@@ -424,6 +448,18 @@ class Pago{
         System.out.println("Info pago");
         System.out.println("Monto: " + monto);
         System.out.println("Fecha de pago: " + fecha);
+=======
+    
+    public void ToString(){
+        System.out.println("Info pago");
+        System.out.println("Monto: " + monto);
+        System.out.println("Fecha de compra: " + fecha);
+    }
+}
+class Efectivo{
+    public calcDevolucion(){
+        
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
 class Efectivo extends Pago{
@@ -446,6 +482,7 @@ class Efectivo extends Pago{
 class Transferencia extends Pago{
     private String banco;
     private String numCuenta;
+<<<<<<< HEAD
     
     public Transferencia(OrdenCompra ordem, String bank, String num, int plata){ //Settea info y paga
         banco = bank;
@@ -459,18 +496,24 @@ class Transferencia extends Pago{
         }
     }    
     
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     public void ToString(){
         System.out.println("Info transferencia");
         System.out.println("Banco: " + banco);
         System.out.println("numCuenta: " + numCuenta);
+<<<<<<< HEAD
         System.out.println("Monto: " + super.getMonto());
         System.out.println("Fecha de pago: " + super.getFecha());
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
 class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
     
+<<<<<<< HEAD
     public Tarjeta(OrdenCompra ordem, String tipe, String numtran, int plata){ //Settea info y paga
         tipo = tipe;
         numTransaccion = numtran;
@@ -483,11 +526,16 @@ class Tarjeta extends Pago{
         }
     }    
     
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     public void ToString(){
         System.out.println("Info tarjeta");
         System.out.println("Tipo: " + tipo);
         System.out.println("numTransacción: " + numTransaccion);
+<<<<<<< HEAD
         System.out.println("Monto: " + super.getMonto());
         System.out.println("Fecha de pago: " + super.getFecha());
+=======
+>>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
