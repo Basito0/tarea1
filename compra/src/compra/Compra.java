@@ -6,6 +6,7 @@ package compra;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Compra {
         cliente.addOrden(orden);
         if(cliente.getOrden(0) != null){
             cliente.getOrden(0).ToString();
-        }        
+        }
         // TODO code application logic here
     }
     
@@ -32,14 +33,25 @@ public class Compra {
 class OrdenCompra{
     private Date fecha;
     private String estado;
+    private Boleto doc;
+    
     public OrdenCompra(){ // Para iniciar el estado y la fecha
         estado = "Pendiente";
         fecha = new Date();
+        doc = new Boleto();
+        doc.setFecha(fecha);
+    }
+    public void setDir(Direccion dir){ //direccion para el docTributario
+        doc.setDir(dir);
+    }
+    public void setRut(String rut){ //rut para el docTributario
+        doc.setRut(rut);
     }
     public void ToString(){
         System.out.println("Info de la orden");
         System.out.println("Fecha de compra: " + fecha);
         System.out.println("Estado: " + estado);
+        doc.ToString();
     }
     public float calcPrecioSinIVA(){
         
@@ -69,6 +81,8 @@ class Cliente{
     
     public void addOrden(OrdenCompra orden){ // Añade ordenes al cliente
         ordenes.add(orden);
+        orden.setDir(direccion);
+        orden.setRut(rut);
     }
     
     public OrdenCompra getOrden(int n){ // Devuelve una orden del cliente
@@ -103,12 +117,31 @@ class DocTributario{
     private String numero;
     private String rut;
     private Date fecha;
+    private Direccion direccion; //Para relacionar el documento con una dirección
+    
+    public DocTributario(){
+        numero = "" + (int)(Math.random()*(200-0+1)+0);
+    }
+    
+    public void setDir(Direccion dir){ //Para asignar la direccion de boleta/factura
+        direccion = dir;
+    }
+    public void setRut(String ru){ //Para asignar la direccion de boleta/factura
+        rut = ru;
+    }
+    public void setFecha(Date fec){ //Para asignar la direccion de boleta/factura
+        fecha = fec;
+    }
+    public Direccion getDir(){
+        return direccion;
+    }
     
     public void ToString(){
         System.out.println("Info DocTributario");
         System.out.println("Número: " + numero);
         System.out.println("Rut: " + rut);
         System.out.println("Fecha de compra: " + fecha);
+        System.out.println("Direccion: " + direccion.getDir());
     }
 }
 class Boleto extends DocTributario{
@@ -159,7 +192,7 @@ class Pago{
         System.out.println("Fecha de compra: " + fecha);
     }
 }
-class Efectivo{
+class Efectivo extends Pago{
     public calcDevolucion(){
         
     }
