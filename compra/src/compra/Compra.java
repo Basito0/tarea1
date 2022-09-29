@@ -6,8 +6,11 @@ package compra;
 
 import java.util.Date;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.lang.Math;
 
+=======
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
 
 /**
  *
@@ -133,10 +136,13 @@ public class Compra {
 =======
     public static void main(String[] args) {
         OrdenCompra orden = new OrdenCompra();
-        orden.ToString();
-        Cliente cliente = new Cliente();
+        Direccion dir = new Direccion("AQUI #123");
+        Cliente cliente = new Cliente("hola", "123-k", dir);
         cliente.ToString();
-        
+        cliente.addOrden(orden);
+        if(cliente.getOrden(0) != null){
+            cliente.getOrden(0).ToString();
+        }        
         // TODO code application logic here
 >>>>>>> a558291 (ToString agregado en clase Cliente)
     }
@@ -146,6 +152,7 @@ class OrdenCompra{
     private float pagar = 0; //El dinero que queda por pagar (se usa para los plazos)
     private Date fecha;
     private String estado;
+<<<<<<< HEAD
     private DocTributario doc; //documento asociado a la orden
     private ArrayList<DetalleOrden> detalles;
     
@@ -193,7 +200,13 @@ class OrdenCompra{
         System.out.println("Peso: " + calcPeso() + "\n");
         doc.ToString();
 =======
+=======
+    public OrdenCompra(){ // Para iniciar el estado y la fecha
+        estado = "Pendiente";
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
         fecha = new Date();
+    }
+    public void ToString(){
         System.out.println("Info de la orden");
         System.out.println("Fecha de compra: " + fecha);
         System.out.println("Estado: " + estado);
@@ -233,8 +246,13 @@ class Cliente{
     private String nombre;
     private String rut;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private Direccion direccion; //La dirección del cliente
     ArrayList<OrdenCompra> ordenes; //Almacena las ordenes de cada cliente
+=======
+    private Direccion direccion;
+    ArrayList<OrdenCompra> ordenes;
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     
     public Cliente(String n, String r, Direccion dir){ // valores iniciales para cliente
         ordenes = new ArrayList<>();
@@ -245,8 +263,11 @@ class Cliente{
     
     public void addOrden(OrdenCompra orden){ // Añade ordenes al cliente
         ordenes.add(orden);
+<<<<<<< HEAD
         orden.setDir(direccion);
         orden.setRut(rut);
+=======
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     }
     
     public OrdenCompra getOrden(int n){ // Devuelve una orden del cliente
@@ -255,23 +276,32 @@ class Cliente{
        }
        return ordenes.get(n);
     }
+<<<<<<< HEAD
 =======
 >>>>>>> a558291 (ToString agregado en clase Cliente)
+=======
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     
     public void ToString(){
         System.out.println("Info del cliente");
         System.out.println("Nombre: " + nombre);
         System.out.println("Rut: " + rut);
 <<<<<<< HEAD
+<<<<<<< HEAD
         System.out.println("Dirección: " + direccion.getDir() + "\n");
         
 =======
 >>>>>>> a558291 (ToString agregado en clase Cliente)
+=======
+        System.out.println("Dirección: " + direccion.getDir());
+        
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     }
 }
 class Direccion{
     private String direccion;
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     public Direccion(String dir){ 
         direccion = dir;
@@ -282,6 +312,14 @@ class Direccion{
     public void ToString(){
         System.out.println("Dirección: " + direccion + "\n");
 =======
+=======
+    public Direccion(String dir){
+        direccion = dir;
+    }
+    public String getDir(){
+        return direccion;
+    }
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     public void ToString(){
         System.out.println("Dirección: " + direccion);
 >>>>>>> a6ad338 (ToString agregado a todas las clases)
@@ -324,7 +362,11 @@ class DocTributario{
 >>>>>>> a6ad338 (ToString agregado a todas las clases)
     }
 }
+<<<<<<< HEAD
 class Boleta extends DocTributario{
+=======
+class Boleto extends DocTributario{
+>>>>>>> b1dff33 (Agregadas relaciones entre clases y tests en main)
     
 }
 class Factura extends DocTributario{
