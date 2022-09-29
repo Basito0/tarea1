@@ -5,6 +5,7 @@
 package compra;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,10 +18,13 @@ public class Compra {
      */
     public static void main(String[] args) {
         OrdenCompra orden = new OrdenCompra();
-        orden.ToString();
-        Cliente cliente = new Cliente();
+        Direccion dir = new Direccion("AQUI #123");
+        Cliente cliente = new Cliente("hola", "123-k", dir);
         cliente.ToString();
-        
+        cliente.addOrden(orden);
+        if(cliente.getOrden(0) != null){
+            cliente.getOrden(0).ToString();
+        }        
         // TODO code application logic here
     }
     
@@ -28,8 +32,11 @@ public class Compra {
 class OrdenCompra{
     private Date fecha;
     private String estado;
-    public void ToString(){
+    public OrdenCompra(){ // Para iniciar el estado y la fecha
+        estado = "Pendiente";
         fecha = new Date();
+    }
+    public void ToString(){
         System.out.println("Info de la orden");
         System.out.println("Fecha de compra: " + fecha);
         System.out.println("Estado: " + estado);
@@ -50,16 +57,44 @@ class OrdenCompra{
 class Cliente{
     private String nombre;
     private String rut;
+    private Direccion direccion;
+    ArrayList<OrdenCompra> ordenes;
+    
+    public Cliente(String n, String r, Direccion dir){ // valores iniciales para cliente
+        ordenes = new ArrayList<>();
+        nombre = n;
+        rut = r;
+        direccion = dir;
+    }
+    
+    public void addOrden(OrdenCompra orden){ // Añade ordenes al cliente
+        ordenes.add(orden);
+    }
+    
+    public OrdenCompra getOrden(int n){ // Devuelve una orden del cliente
+       if(ordenes == null){
+           return null;
+       }
+       return ordenes.get(n);
+    }
     
     public void ToString(){
         System.out.println("Info del cliente");
         System.out.println("Nombre: " + nombre);
         System.out.println("Rut: " + rut);
+        System.out.println("Dirección: " + direccion.getDir());
+        
     }
 }
 class Direccion{
     private String direccion;
     
+    public Direccion(String dir){
+        direccion = dir;
+    }
+    public String getDir(){
+        return direccion;
+    }
     public void ToString(){
         System.out.println("Dirección: " + direccion);
     }
@@ -76,10 +111,10 @@ class DocTributario{
         System.out.println("Fecha de compra: " + fecha);
     }
 }
-class Boleto{
+class Boleto extends DocTributario{
     
 }
-class Factura{
+class Factura extends DocTributario{
     
 }
 class DetalleOrden{
