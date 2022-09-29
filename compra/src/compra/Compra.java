@@ -18,6 +18,7 @@ public class Compra {
     /**
      * @param args the command line arguments
      */
+<<<<<<< HEAD
     public static void main(String[] args) {   
         
         //Creando artículos para comprar
@@ -129,6 +130,15 @@ public class Compra {
 
         System.out.println(orden3.getTotal());        
         System.out.println("\n");
+=======
+    public static void main(String[] args) {
+        OrdenCompra orden = new OrdenCompra();
+        orden.ToString();
+        Cliente cliente = new Cliente();
+        cliente.ToString();
+        
+        // TODO code application logic here
+>>>>>>> a558291 (ToString agregado en clase Cliente)
     }
     
 }
@@ -173,6 +183,7 @@ class OrdenCompra{
         pagar = monto;
     }
     public void ToString(){
+<<<<<<< HEAD
         System.out.println("Info de la orden");
         System.out.println("Fecha de compra: " + fecha);
         System.out.println("Estado: " + estado);
@@ -181,6 +192,12 @@ class OrdenCompra{
         System.out.println("Precio: " + calcPrecio());
         System.out.println("Peso: " + calcPeso() + "\n");
         doc.ToString();
+=======
+        fecha = new Date();
+        System.out.println("Info de la orden");
+        System.out.println("Fecha de compra: " + fecha);
+        System.out.println("Estado: " + estado);
+>>>>>>> a558291 (ToString agregado en clase Cliente)
     }
     public float calcPrecioSinIVA(){
         float total = 0;
@@ -215,6 +232,7 @@ class OrdenCompra{
 class Cliente{
     private String nombre;
     private String rut;
+<<<<<<< HEAD
     private Direccion direccion; //La dirección del cliente
     ArrayList<OrdenCompra> ordenes; //Almacena las ordenes de cada cliente
     
@@ -237,13 +255,18 @@ class Cliente{
        }
        return ordenes.get(n);
     }
+=======
+>>>>>>> a558291 (ToString agregado en clase Cliente)
     
     public void ToString(){
         System.out.println("Info del cliente");
         System.out.println("Nombre: " + nombre);
         System.out.println("Rut: " + rut);
+<<<<<<< HEAD
         System.out.println("Dirección: " + direccion.getDir() + "\n");
         
+=======
+>>>>>>> a558291 (ToString agregado en clase Cliente)
     }
 }
 class Direccion{
