@@ -75,8 +75,8 @@ public class Compra {
         if(cliente1.getOrden(0) != null && cliente1.getOrden(1) != null && 
                 cliente1.getOrden(2) != null){
             cliente1.getOrden(0).ToString();
-            cliente1.getOrden(0).ToString();
-            cliente1.getOrden(0).ToString();
+            cliente1.getOrden(1).ToString();
+            cliente1.getOrden(2).ToString();
         }
         if(cliente2.getOrden(0) != null){
             cliente2.getOrden(0).ToString();
@@ -84,16 +84,47 @@ public class Compra {
         if(cliente3.getOrden(0) != null){
             cliente3.getOrden(0).ToString();
         }
-        System.out.println("Tipo: " + orden1.getType());
-        System.out.println("Tipo: " + orden2.getType());
-        System.out.println("Tipo: " + orden3.getType());
-        System.out.println("Tipo: " + orden4.getType());
-        System.out.println("Tipo: " + orden5.getType());
         
+        //Pagos para orden 1 (con 2 pagos y efectivo)
+        System.out.println("Pago de orden 1");
+        Efectivo efe1 = new Efectivo(orden1, 1000);
+        efe1.ToString();
+
+        System.out.println(orden1.getTotal());
+        Efectivo efe2 = new Efectivo(orden1, 500);
+        efe2.ToString();
+        
+        System.out.println(efe2.calcDevolucion());
+        System.out.println();
+        
+        //Pagos para orden 2 (3 pagos por transferencia en diferentes fechas)
+        System.out.println("Pago de orden 2");
+        Transferencia tran1 = new Transferencia(orden2, "Banco1", "02191203", 1000);
+        tran1.ToString();
+
+        System.out.println(orden2.getTotal());
+        Transferencia tran2 = new Transferencia(orden2, "Banco1", "02191203", 500);
+        tran2.ToString();
+
+        System.out.println(orden2.getTotal());
+        Transferencia tran3 = new Transferencia(orden2, "Banco1", "02191203", 1000);
+        tran3.ToString();
+        System.out.println(orden2.getTotal());
+        
+        System.out.println("\n");
+        
+        //Pagos para orden 3 (1 pago con débito)
+        System.out.println("Pago de orden 3");
+        Tarjeta tar1 = new Tarjeta(orden3, "Debito", "123948921", 1000);
+        tar1.ToString();
+
+        System.out.println(orden3.getTotal());        
+        System.out.println("\n");
     }
     
 }
 class OrdenCompra{
+    private float pagar = 0;
     private Date fecha;
     private String estado;
     private DocTributario doc; //documento asociado a la orden
@@ -114,12 +145,22 @@ class OrdenCompra{
         detalles.add(ordet);
         detalles.get(detalles.size()-1).setCant(cant);
         detalles.get(detalles.size()-1).ToString();
+        setTotal(detalles.get(detalles.size()-1).calcPrecio());
     }
     public void setDir(Direccion dir){ //direccion para el docTributario
         doc.setDir(dir);
     }
     public void setRut(String rut){ //rut para el docTributario
         doc.setRut(rut);
+    }
+    public float getTotal(){
+        if(pagar < 0){
+            return 0;
+        }
+        return pagar;
+    }
+    public void setTotal(float monto){
+        pagar += monto;
     }
     public void ToString(){
         System.out.println("Info de la orden");
@@ -326,34 +367,86 @@ class Articulo{
 class Pago{
     private float monto;
     private Date fecha;
+    private OrdenCompra orden;
     
+    public void setFecha(Date date){
+        fecha = date;
+    }
+    public void setMonto(int plata){
+        monto = plata;
+    }
+    public void setOrden(OrdenCompra ordem){
+        orden = ordem;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public float getMonto(){
+        return monto;
+    }
+    public OrdenCompra getCompra(){
+        return orden;
+    }
     public void ToString(){
         System.out.println("Info pago");
         System.out.println("Monto: " + monto);
-        System.out.println("Fecha de compra: " + fecha);
+        System.out.println("Fecha de pago: " + fecha);
     }
 }
 class Efectivo extends Pago{
-    public calcDevolucion(){
-        
+    
+    public Efectivo(OrdenCompra ordem, int plata){
+        super.setMonto(plata);
+        super.setOrden(ordem);
+        super.setFecha(new Date());
+        ordem.setTotal(-super.getMonto());
+    }    
+    public float calcDevolucion(){
+        if(super.getCompra().getTotal() < 0){
+            return super.getCompra().getTotal()*-1;
+        }
+        return super.getMonto() - super.getCompra().getTotal();
     }
 }
 class Transferencia extends Pago{
     private String banco;
     private String numCuenta;
+    
+    public Transferencia(OrdenCompra ordem, String bank, String num, int plata){
+        banco = bank;
+        numCuenta = num;
+        super.setMonto(plata);
+        super.setOrden(ordem);
+        super.setFecha(new Date());
+        ordem.setTotal(-super.getMonto());
+    }    
+    
     public void ToString(){
         System.out.println("Info transferencia");
         System.out.println("Banco: " + banco);
         System.out.println("numCuenta: " + numCuenta);
+        System.out.println("Monto: " + super.getMonto());
+        System.out.println("Fecha de pago: " + super.getFecha());
     }
 }
 class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
     
+    public Tarjeta(OrdenCompra ordem, String tipe, String numtran, int plata){
+        tipo = tipe;
+        numTransaccion = numtran;
+        super.setMonto(plata);
+        super.setOrden(ordem);
+        super.setFecha(new Date());
+        ordem.setTotal(-super.getMonto());
+    }    
+    
     public void ToString(){
         System.out.println("Info tarjeta");
         System.out.println("Tipo: " + tipo);
         System.out.println("numTransacción: " + numTransaccion);
+        System.out.println("Monto: " + super.getMonto());
+        System.out.println("Fecha de pago: " + super.getFecha());
     }
 }
