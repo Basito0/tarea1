@@ -16,6 +16,11 @@ public class Compra {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        OrdenCompra orden = new OrdenCompra();
+        orden.ToString();
+        Cliente cliente = new Cliente();
+        cliente.ToString();
+        
         // TODO code application logic here
     }
     
@@ -24,7 +29,10 @@ class OrdenCompra{
     private Date fecha;
     private String estado;
     public void ToString(){
+        fecha = new Date();
+        System.out.println("Info de la orden");
         System.out.println("Fecha de compra: " + fecha);
+        System.out.println("Estado: " + estado);
     }
     public float calcPrecioSinIVA(){
         
@@ -42,6 +50,12 @@ class OrdenCompra{
 class Cliente{
     private String nombre;
     private String rut;
+    
+    public void ToString(){
+        System.out.println("Info del cliente");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Rut: " + rut);
+    }
 }
 class Direccion{
     private String direccion;
