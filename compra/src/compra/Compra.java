@@ -47,6 +47,7 @@ public class Compra {
         OrdenCompra orden5 = new OrdenCompra(doc5);
         
         //Añadiendo artículos a las ordenes
+        //Se imprimen como "Articulos en la orden"
         orden1.addArt(art1, 10); 
         orden1.addArt(art2, 2);
         orden2.addArt(art1, 9);
@@ -67,6 +68,7 @@ public class Compra {
         Cliente cliente3 = new Cliente("pc", "999-k", dir2);
                 
         //Acciones con clientes
+        //ToString y addOrden
         cliente1.ToString();
         cliente1.addOrden(orden1);
         cliente1.addOrden(orden2);
@@ -78,6 +80,7 @@ public class Compra {
         cliente3.ToString();
         cliente3.addOrden(orden5);
         
+        //Imprime OrdenCompra de cada cliente y su respectivo Documento Tributario
         if(cliente1.getOrden(0) != null && cliente1.getOrden(1) != null && 
                 cliente1.getOrden(2) != null){
             cliente1.getOrden(0).ToString();
@@ -304,7 +307,7 @@ class DetalleOrden{
         cantidad = can;
     }
     public void ToString(){
-        System.out.println("Detalle de los articulos en la orden");
+        System.out.println("Articulos en la orden");
         System.out.println("Articulo: " + art.getNombre());
         System.out.println("Cantidad: " + cantidad);
         System.out.println("Precio sin IVA: " + calcPrecioSinIVA());
