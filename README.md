@@ -1,3 +1,3 @@
 # tarea1
 
-Integrantes: Bastián Becerra P.
+Integrantes: Bastián Alexander Becerra Parada
